@@ -1,0 +1,83 @@
+package matrices1;
+
+import java.util.Scanner;
+
+public class PruebaMatriz {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+
+		// Prueba del constructor por defecto
+		Matriz m1 = new Matriz();
+		System.out.println("Matriz m1 (constructor por defecto):");
+		m1.imprimirM();
+
+		// Prueba del constructor con dimensiones
+		System.out.println("Introduce el número de filas y columnas para la matriz m2:");
+		int m = sc.nextInt();
+		int n = sc.nextInt();
+		Matriz m2 = new Matriz(m, n);
+		System.out.println("\nMatriz m2 (constructor con dimensiones):");
+		m2.imprimirM();
+
+		// Prueba del constructor con dimensiones y valor inicial
+		System.out.println("Introduce el valor inicial para la matriz m3:");
+		double v = sc.nextDouble();
+		Matriz m3 = new Matriz(m, n, v);
+		System.out.println("\nMatriz m3 (constructor con dimensiones y valor inicial):");
+		m3.imprimirM();
+
+		// Prueba del método rellenaM
+		System.out.println("Introduce el valor con el que rellenar m2:");
+		double relleno = sc.nextDouble();
+		m2.rellenaM(relleno);
+		System.out.println("\nMatriz m2 después de rellenar con " + relleno + ":");
+		m2.imprimirM();
+
+		// Prueba del método sumaM
+		Matriz m4 = m2.sumaM(m3);
+		System.out.println("\nSuma de m2 y m3:");
+		m4.imprimirM();
+
+		// Prueba del método get
+		System.out.println("\nIntroduce la fila y columna para obtener el valor de m4:");
+		int i = sc.nextInt();
+		int j = sc.nextInt();
+		System.out.println("Elemento en la posición (" + i + "," + j + ") de m4: " + m4.get(i, j));
+
+		// Prueba del método matrizIdentidad
+		System.out.println("Introduce el tamaño para la matriz identidad:");
+		int size = sc.nextInt();
+		Matriz m5 = Matriz.matrizIdentidad(size);
+		System.out.println("\nMatriz identidad de " + size + "x" + size + ":");
+		m5.imprimirM();
+
+		// Prueba del método creaM
+		System.out.println("Introduce el número de filas y columnas para la matriz creada:");
+		int filas = sc.nextInt();
+		int columnas = sc.nextInt();
+		System.out.println("Introduce los valores para la matriz:");
+		Matriz m6 = Matriz.creaM(filas, columnas, sc);
+		System.out.println("\nMatriz creada:");
+		m6.imprimirM();
+
+		//Prueba de matrices aleatorias
+		System.out.println("Ingrese el número de filas para las matrices:");
+		int filas1 = sc.nextInt();
+		System.out.println("Ingrese el número de columnas para las matrices:");
+		int columnas1 = sc.nextInt();
+		Matriz m8 = Matriz.crearAleatoria(filas1, columnas1);
+		Matriz m9 = Matriz.crearAleatoria(filas1, columnas1);
+		Matriz matrizSuma = m8.sumar(m9);
+		System.out.println("Matriz 1: ");
+		m8.imprimirM();
+		System.out.println("Matriz 2: ");
+		m9.imprimirM();
+		if (matrizSuma != null) {
+			System.out.println("\nSuma de las matrices:");
+			matrizSuma.imprimirM();
+		}
+
+
+	}
+}
