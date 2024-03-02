@@ -1,0 +1,224 @@
+package matrices1;
+
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.Random;
+
+public class Matriz {
+	private double [][] elemento;
+
+	public Matriz () {
+		elemento = new double [10][10];
+		for (int i = 0; i < elemento.length; i++) {
+			for (int j = 0; j < elemento.length; j++) {
+				elemento [i][j] = 0.0;
+			}
+		}
+	}
+
+	public Matriz (int m, int n) {
+		if (m < 0 || n < 0) {
+			System.out.println("Las dimensiones de la matriz no pueden ser negativas");
+			m = 0;
+			n = 0;
+		}
+		elemento = new double [m][n];
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				elemento [i][j] = 0.0;
+			}
+		}
+	}
+
+	public Matriz (int m, int n, double v) {
+		if (m < 0 || n < 0) {
+			System.out.println("Las dimensiones de la matriz no pueden ser negativas");
+			m = 0;
+			n = 0;
+		}
+		elemento = new double [m][n];
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				elemento[i][j] = v;
+			}
+
+		}
+	}
+
+	public  Matriz (double [][] a) {
+		if (a.length == 0 || a[0].length == 0) {
+			System.out.println("El array no puede estar vacío");
+		}else {
+			int m = a.length;
+			int n = a[0].length;
+			elemento = new double [m][n];
+			for (int i = 0; i < m; i++) {
+				for (int j = 0; j < n; j++) {
+					elemento [i][j] = a[i][j];
+				}
+			}
+		}
+	}
+
+
+	public int getNumeroFilas () {
+		return this.elemento.length;
+	}
+
+
+	public int getNumeroColumnas () {
+		return this.elemento[0].length;
+	}
+
+	public double get(int i, int j) {
+		if (i < 0 || i >= this.elemento.length || j < 0 || j >= this.elemento[0].length) {
+			System.out.println("Índice fuera de los límites de la matriz");
+			return -1;
+		} else {
+			return this.elemento[i][j];
+		}
+	}
+
+	public Object clone() {
+		Matriz copia = new Matriz(this.elemento.length, this.elemento[0].length);
+		for (int i = 0; i < this.elemento.length; i++) {
+			for (int j = 0; j < this.elemento[0].length; j++) {
+				copia.elemento[i][j] = this.elemento[i][j];
+			}
+		}
+		return copia;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Matriz [elemento=" + Arrays.toString(elemento) + ", getNumeroFilas()=" + getNumeroFilas()
+		+ ", getNumeroColumnas()=" + getNumeroColumnas() + ", getClass()=" + getClass() + ", hashCode()="
+		+ hashCode() + ", toString()=" + super.toString() + "]";
+	}
+
+	public boolean equals(Object v) {
+		if (v instanceof Matriz) {
+			Matriz matriz2 = (Matriz) v;
+			if (this.elemento.length != matriz2.elemento.length || this.elemento[0].length != matriz2.elemento[0].length) {
+				return false;
+			}
+			for (int i = 0; i < this.elemento.length; i++) {
+				for (int j = 0; j < this.elemento[0].length; j++) {
+					if (this.elemento[i][j] != matriz2.elemento[i][j]) {
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public void rellenaM(double v) {
+		for (int i = 0; i < this.elemento.length; i++) {
+			for (int j = 0; j < this.elemento[0].length; j++) {
+				this.elemento[i][j] = v;
+			}
+		}
+		this.imprimirM();
+	}
+
+	public static Matriz matrizIdentidad(int m) {
+		Matriz identidad = new Matriz(m, m);
+		for (int i = 0; i < m; i++) {
+			identidad.elemento[i][i] = 1;
+		}
+		identidad.imprimirM();
+		return identidad;
+	}
+
+	public Matriz sumar(Matriz otraMatriz) {
+		int filas = this.elemento.length;
+		int columnas = this.elemento[0].length;
+
+		if (filas != otraMatriz.elemento.length || columnas != otraMatriz.elemento[0].length) {
+			return null;
+		}
+
+		Matriz resultado = new Matriz(filas, columnas);
+
+		for (int i = 0; i < filas; i++) {
+			for (int j = 0; j < columnas; j++) {
+				resultado.elemento[i][j] = this.elemento[i][j] + otraMatriz.elemento[i][j];
+			}
+		}
+
+		return resultado;
+	}
+
+	public Matriz sumaM(Matriz a) {
+		int m = this.elemento.length;
+		int n = this.elemento[0].length;
+		int aFilas = a.elemento.length;
+		int aColumnas = a.elemento[0].length;
+
+		if (m != aFilas || n != aColumnas) {
+			System.out.println("Las matrices deben tener dimensiones iguales");
+			return null;
+		}
+
+		Matriz resultado = new Matriz(m, n);
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				resultado.elemento[i][j] = this.elemento[i][j] + a.elemento[i][j];
+			}
+		}
+
+		return resultado;
+	}
+
+	public static Matriz crearAleatoria (int m, int n) {
+		if (m < 0 || n < 0) {
+			System.out.println("Las dimensiones de la matriz no pueden ser negativas");
+			m = 0;
+			n = 0;
+		}
+		Random random = new Random();
+		Matriz matriz = new Matriz(m, n);
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				double valor = random.nextDouble() * 100;
+				int valorEntero = (int) valor;
+				matriz.elemento[i][j] = valorEntero / 100.0;
+			}
+		}
+		return matriz;
+	}
+
+	public static Matriz creaM(int m, int n, Scanner sc) {
+		if (m < 0 || n < 0) {
+			System.out.println("Las dimensiones de la matriz no pueden ser negativas");
+			m = 0;
+			n = 0;
+		}
+		Matriz matriz = new Matriz(m, n);
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				System.out.println("Introduce el valor para la posición [" + (i+1) + "][" + (j+1) + "]:");
+				if (sc.hasNextDouble()) {
+					matriz.elemento[i][j] = sc.nextDouble();
+				} else {
+					System.out.println("Faltan valores");
+					return null;
+				}
+			}
+		}
+		return matriz;
+	}
+
+	public void imprimirM() {
+		for (int i = 0; i < this.elemento.length; i++) {
+			for (int j = 0; j < this.elemento[i].length; j++) {
+				System.out.printf("%8.2f ", this.elemento[i][j]);
+			}
+			System.out.println();
+		}
+	}
+
+}
